@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html>
         <head>
-            <mata charset="utf-8"/>
-            <script src="echarts.min.js"></script>
+            <meta charset="utf-8"/>
+            <style type="text/css">
+              body{
+                  width:900px;
+                  margin:0 auto;
+                  background-color:aquamarine;
+              }
+              #display{
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+              }
+            </style>
+            <script  src="../AIgit/node_modules/echarts/dist/echarts.min.js"></script>
+            <script src="http://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+            <script type="text/javascript">
+              $(function(){
+                    $('#display').click(function(){
+                        $.getJSON("../AIgit/AI/AI.json",function(data){
+                            for(var i=0;i<53;i++){
+                                var div=document.createElement("div");
+                                var num=i.toString();
+                                div.id=num;
+                                div.style.cssText="width:600px;height:400px;"
+                                document.body.appendChild(div);
+                                //初始化echarts实例
+                                var myChart=echarts.init(document.getElementById(num));
+                                //指定图表的配置项和数据
+                                var option={
+                                    title:{
+                                        text:Data[i]["start"]+"--"+Data[i]["dest"],
+                                    },
+                                    tooltip:{},
+                                    legend:{
+                                      data:['余票量']
+                                    },
+                                    xAxis:{
+                                        data:["2.3","2.4","2.5","2.6"]
+                                    },
+                                    series:[
+                                        {
+                                            name:'余票量',
+                                            type:'bar',
+                                            data:[Data[i]["date3"],Data[i]["data4"],Data[i]["data5"],Data[i]["data6"]]
+                                        }
+                                    ]
+                                };
+                                myChart.setOption(option);
+                            }
+                        })
+                    })
+              })
+              
+            </script>
         </head>
         <body>
-            
+
+            <input type="button" id="display" value="显示表格">
         </body>
 </html>
